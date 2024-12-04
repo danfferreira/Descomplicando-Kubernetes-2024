@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: girus
+  name: girus
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources: {}
+  - image: busybox
+    name: busybox
+    args: 
+    - sleep
+    - "600"
+  - image: spark
+    name: spark  
+    resources: {}  
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
