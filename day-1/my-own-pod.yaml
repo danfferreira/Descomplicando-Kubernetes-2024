@@ -3,14 +3,14 @@ kind: Pod
 metadata:
   creationTimestamp: null
   labels:
-    run: giropops
-  name: giropops
+    run: giropops-senhas
+  name: giropops-senhas
 spec:
-  containers:
-  - image: nginx
-    name: giropops
+  containers: 
+  - image: giropops-senhas
+    name: giropops-senhas
     ports:
-    - containerPort: 80
+    - containerPort: 5000
     resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Always
