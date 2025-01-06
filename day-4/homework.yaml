@@ -2,37 +2,37 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: nginx-deployment
-  name: nginx-deployment
+    app: redis-deployment
+  name: redis-deployment
   namespace: giropops
 spec:
-  replicas: 25
+  replicas: 10
   selector:
     matchLabels:
-      app: nginx-deployment
+      app: redis-deployment
   strategy:
     type: RollingUpdate 
     rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1 
+      maxSurge: 2
+      maxUnavailable: 2
   template:
     metadata:
       labels:
-        app: nginx-deployment
+        app: redis-deployment
     spec:
       containers:
-      - image: nginx:1.19.0
-        name: nginx
+      - image: redis:latest
+        name: redis
         resources:
           limits: 
-            cpu: 0.6
+            cpu: 0.5
             memory: 256Mi
           requests:
-            cpu: 0.4
+            cpu: 0.3
             memory: 128Mi
         livenessProbe: 
           tcpSocket:
-            port: 80
+            port: 6379
           initialDelaySeconds: 15
           periodSeconds: 10
           timeoutSeconds: 5
@@ -40,9 +40,8 @@ spec:
         readinessProbe:
           exec:
             command:
-            - curl
-            - -f
-            - http://localhost:80/
+            - redis-cli
+            - ping
           initialDelaySeconds: 15
           periodSeconds: 10
           timeoutSeconds: 5
@@ -50,7 +49,7 @@ spec:
           successThreshold: 1
         startupProbe:
           tcpSocket: 
-            port: 80  
+            port: 6379  
           initialDelaySeconds: 15
           timeoutSeconds: 5
           failureThreshold: 1

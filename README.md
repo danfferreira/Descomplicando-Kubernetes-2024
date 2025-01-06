@@ -41,8 +41,24 @@ Dá para pegar qual versão foi! Usando o rollout history deployment -n {namespa
 - Dica: Usar Annotations, para facilitar nas revisões
 - O rollout funciona em Deployments, StatefulSets e DaemonSets.
 
-# ReplicaSet
+## ReplicaSet
+Um ReplicaSet mantém um número desejado de réplicas de pods em execução, garantindo alta disponibilidade e escalabilidade. Ele recria pods automaticamente em caso de falhas para atender ao número definido. Isso é meio que incluso nos manifestos de deployment.
 
+## DaemonSet
+O DaemonSet garante que uma cópia de um pod específico seja executada em todos (ou em um subconjunto) dos nós de um cluster Kubernetes. É ideal para pods que fornecem funcionalidades como coleta de logs, monitoramento ou serviços de rede. Por exemplo, Prometheus
+
+## Probes
+Não é "pobres", como eu li errado de cara.
+Se trata de uma forma similar ao healthcheck do Docker, de verificar se o pod está saudável. Existem as 3 principais probes 
+
+- startUp Probe:
+É a probe que verifica se o pod startou de forma adequada. Não vai ficar repetindo o check
+
+- livenessProbe:
+É uma probe que verifica o funcionamento do container, seja via tcpSocket ou httpGet. A diferença para o startUp é que o liveness pode rodar n vezes. Por exemplo, ele pode verificar a porta 80 de um nginx a cada 15 segundos para ver se está funcional
+
+- readinessProbe
+Se trata de um probe que vai verificar se o pod está apto a receber requisições. Não está? ele fica "de canto" e não será disponibilizado.
 
 
 # AA
